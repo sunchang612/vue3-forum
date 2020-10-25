@@ -1,4 +1,4 @@
-# vue3-zhihu
+# vue3-forum
 
 ## Project setup
 ```
