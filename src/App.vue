@@ -1,15 +1,18 @@
 <template>
   <div class="container">
     <global-header :user="currentUser"></global-header>
-    <column-list :list="list"></column-list>
+    <validate-input :rules="emailRules" v-model="modelValue"></validate-input>
+    <div>{{modelValue}}</div>
+    <!-- <column-list :list="list"></column-list> -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
 
 const userData: UserProps = {
   isLogin: true,
@@ -30,16 +33,26 @@ const testData: ColumnProps[] = [
     avatar: ''
   }
 ]
+const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 export default defineComponent({
   name: 'App',
   components: {
-    ColumnList,
-    GlobalHeader
+    // ColumnList,
+    GlobalHeader,
+    ValidateInput
   },
   setup () {
+    const emailRules: RulesProp = [
+      { type: 'required', message: '邮箱不能为空' },
+      { type: 'email', message: '请输入正确的邮箱格式' }
+    ]
+    const modelValue = ref('achang')
     return {
       list: testData,
-      currentUser: userData
+      currentUser: userData,
+      emailRules,
+      modelValue
     }
   }
 })
