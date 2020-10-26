@@ -1,11 +1,13 @@
 <template>
   <div class="validate-input-container pb-3">
     <input
+      v-bind="$attrs"
       :class="{'is-invalid': inputRef.error}"
-      type="email" v-model="inputRef.val"
+      v-model="inputRef.val"
       name="" id="" class="form-control"
       @blur="validateInput"
-      @input="udpateValue">
+      @input="udpateValue"
+    >
     <span v-if="inputRef.error" class="invalid-feedback">{{inputRef.message}}</span>
   </div>
 </template>
@@ -14,7 +16,7 @@ import { defineComponent, PropType, reactive } from 'vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 interface RuleProp {
-  type: 'required' | 'email';
+  type: 'required' | 'email' | 'password';
   message: string;
   validator?: () => boolean;
 }
@@ -25,8 +27,8 @@ export default defineComponent({
     rules: Array as PropType<RulesProp>,
     modelValue: String
   },
+  inheritAttrs: false, // 不允许继承属性
   setup (props, context) {
-    console.log('modelVaule ---->', props.modelValue)
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -45,6 +47,9 @@ export default defineComponent({
               break
             case 'email':
               passed = emailReg.test(inputRef.val)
+              break
+            case 'password':
+              passed = inputRef.val.trim().length > 6
               break
             default:
               break

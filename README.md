@@ -42,4 +42,48 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     ```
   - 弊端：不支持多个 v-model
 #### vue3
-  - 
+  - modelValue
+  ```js
+    props: {
+      modelValue: String
+    },
+  ```
+  - 更新 v-model 
+  ```js
+  setup(props, context) {
+    const udpateValue = (e: KeyboardEvent) => {
+      const targetValue = (e.target as HTMLInputElement).value
+      inputRef.val = targetValue
+      context.emit('update:modelValue', targetValue)
+    }
+    return {
+      udpateValue
+    }
+  }
+  ```
+
+#### attrs
+- 父组件
+```js
+ <validate-input
+  :rules="emailRules"
+  v-model="modelValue"
+  placeholder="Hello"
+  type="text"
+  ></validate-input>
+```
+- 子组件
+```js
+<div>
+  <input
+    v-bind="$attrs"
+    :class="{'is-invalid': inputRef.error}"
+    type="email" v-model="inputRef.val"
+    name="" id="" class="form-control"
+    @blur="validateInput"
+    @input="udpateValue"
+  />
+</div>
+```
+- 直接写 placeholder 会继承在子组件的根元素的属性中，也就是上面的 div 中 ```使用 inheritAttrs : false``` 禁用 Attribute 的继承
+- 然后直接使用 $attrs 获取添加的属性
