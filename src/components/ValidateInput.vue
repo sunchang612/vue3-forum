@@ -12,7 +12,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { emitter } from './ValidateForm.vue'
+
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 interface RuleProp {
@@ -59,6 +61,7 @@ export default defineComponent({
         inputRef.error = !allPassed
         return allPassed
       }
+      return true
     }
 
     const udpateValue = (e: KeyboardEvent) => {
@@ -66,6 +69,11 @@ export default defineComponent({
       inputRef.val = targetValue
       context.emit('update:modelValue', targetValue)
     }
+
+    // 发送检查 input 事件
+    onMounted(() => {
+      emitter.emit('form-check-created', validateInput)
+    })
 
     return {
       inputRef,
