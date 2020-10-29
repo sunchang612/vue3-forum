@@ -1,43 +1,29 @@
 <template>
   <div class="container">
     <global-header :user="currentUser"></global-header>
-    <validate-form @form-submit="onFormSubmit">
-      <div class="mb-3">
-        <label class="form-label">邮箱地址</label>
-        <validate-input
-          :rules="emailRules"
-          v-model="modelValue"
-          placeholder="Hello"
-          type="text"
-        ></validate-input>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">密码</label>
-        <validate-input
-          :rules="passRules"
-          v-model="passValue"
-          placeholder="请输入你的密码"
-          type="password"
-        ></validate-input>
-      </div>
-      <template #submit>
-        <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>
-      </template>
-    </validate-form>
+    <router-view></router-view>
+    <footer class="text-center py-4 text-secondary bg-light mt-6">
+      <small>
+        <ul class="list-inline mb-0">
+          <a href="https://www.jianshu.com/u/639201a5d397" class="list-inline-item">© 2020 阿畅</a>
+          <a href="https://sunchang612.github.io/blog/Vue/principle/" class="list-inline-item">Vue</a>
+          <a href="https://sunchang612.github.io/blog/typescript/" class="list-inline-item">TypeScript</a>
+          <a href="https://sunchang612.github.io/blog/" class="list-inline-item">博客</a>
+          <a href="https://sunchang612.github.io/blog/react/combat/" class="list-inline-item">React</a>
+        </ul>
+      </small>
+    </footer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import mitt from 'mitt'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
-import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
-import ValidateForm from './components/ValidateForm.vue'
 
 const userData: UserProps = {
-  isLogin: true,
+  isLogin: false,
   name: 'achang'
 }
 
@@ -59,38 +45,12 @@ const testData: ColumnProps[] = [
 export default defineComponent({
   name: 'App',
   components: {
-    // ColumnList,
-    GlobalHeader,
-    ValidateInput,
-    ValidateForm
+    GlobalHeader
   },
   setup () {
-    const inputRef = ref()
-
-    const emailRules: RulesProp = [
-      { type: 'required', message: '邮箱不能为空' },
-      { type: 'email', message: '请输入正确的邮箱格式' }
-    ]
-    const passRules: RulesProp = [
-      { type: 'required', message: '密码不能为空' },
-      { type: 'password', message: '长度不能小于 6' }
-    ]
-
-    const modelValue = ref('achang')
-    const passValue = ref('')
-
-    const onFormSubmit = (res: boolean) => {
-      console.log('res --->', res)
-    }
-
     return {
       list: testData,
-      currentUser: userData,
-      emailRules,
-      modelValue,
-      passValue,
-      passRules,
-      onFormSubmit
+      currentUser: userData
     }
   }
 })
