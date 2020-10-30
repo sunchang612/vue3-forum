@@ -6,7 +6,7 @@
           <img class="rounded-circle border border-light my-3" style="height: 200px" :src="column.avatar" alt="">
           <h5 class="card-title">{{column.title}}</h5>
           <p class="card-text text-left">{{column.description}}</p>
-          <a href="#" class="btn btn-outline-primary">进入专栏</a>
+          <router-link :to="`/details/${column.id}`" class="btn btn-outline-primary">进入专栏</router-link>
         </div>
       </div>
     </div>
@@ -14,15 +14,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-
-// 类型断言
-// 好处就是后面写代码时，可以自动补全
-export interface ColumnProps {
-  id: number;
-  title: string;
-  avatar: string;
-  description: string;
-}
+import { ColumnProps } from '../testData'
 
 export default defineComponent({
   name: 'ColumnList',

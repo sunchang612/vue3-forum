@@ -17,30 +17,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import { testData } from './testData'
 
 const userData: UserProps = {
   isLogin: false,
   name: 'achang'
 }
-
-const testData: ColumnProps[] = [
-  {
-    id: 1,
-    title: 'test1',
-    description: '这是测试描述',
-    avatar: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3615133320,1462308236&fm=26&gp=0.jpg'
-  },
-  {
-    id: 2,
-    title: 'test2',
-    description: '这是测试描述2',
-    avatar: ''
-  }
-]
 
 export default defineComponent({
   name: 'App',
