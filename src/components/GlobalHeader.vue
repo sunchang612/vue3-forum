@@ -36,6 +36,7 @@ export default defineComponent({
       required: true
     }
   },
+
   components: {
     Dropdown,
     DropdownItem

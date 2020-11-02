@@ -28,7 +28,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import mitt from 'mitt'
-
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 import ValidateForm from '../components/ValidateForm.vue'
 export default defineComponent({
@@ -51,9 +52,14 @@ export default defineComponent({
 
     const modelValue = ref('achang')
     const passValue = ref('')
-
+    const store = useStore()
+    const router = useRouter()
     const onFormSubmit = (res: boolean) => {
       console.log('res --->', res)
+      if (res) {
+        router.push('/')
+        store.commit('login')
+      }
     }
     return {
       emailRules,
