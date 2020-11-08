@@ -28,6 +28,7 @@ export default defineComponent({
     // 添加默认图片
     const columnList = computed(() => {
       return props.list.map(c => {
+        console.log('图片 ------->', c.avatar)
         if (!c.avatar) {
           c.avatar = require('@/assets/logo.png')
         }
