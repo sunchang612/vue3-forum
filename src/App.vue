@@ -3,6 +3,7 @@
     <global-header :user="currentUser"></global-header>
     <link rel="stylesheet" href="../src/assets/column.json">
     <router-view></router-view>
+    <loading v-if="isLoading"></loading>
     <footer class="text-center py-4 text-secondary bg-light mt-6">
       <small>
         <ul class="list-inline mb-0">
@@ -18,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useStore } from 'vuex'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import Loading from '@/components/Loading.vue'
 import { GlobalDataProps } from './store'
 
 const userData: UserProps = {
@@ -32,17 +34,19 @@ const userData: UserProps = {
 export default defineComponent({
   name: 'App',
   components: {
-    GlobalHeader
+    GlobalHeader,
+    Loading
   },
   setup () {
     const store = useStore<GlobalDataProps>()
+    const isLoading = computed(() => store.state.showLoader)
     const currentUser = computed(() => {
-      console.log('user -------->', store.state.user)
       return store.state.user
     })
     // console.log('current user ------>', currentUser)
     return {
-      currentUser
+      currentUser,
+      isLoading
     }
   }
 })

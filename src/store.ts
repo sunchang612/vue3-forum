@@ -12,13 +12,15 @@ export interface GlobalDataProps {
   columns: ColumnProps[];
   posts: PostProps[];
   user: UserProps;
+  showLoader: boolean;
 }
 
 const store = createStore<GlobalDataProps>({
   state: {
     columns: [],
     posts: testPosts,
-    user: { isLogin: false }
+    user: { isLogin: false },
+    showLoader: false
   },
 
   mutations: {
@@ -28,6 +30,10 @@ const store = createStore<GlobalDataProps>({
 
     getColumns (state, newData) {
       state.columns = newData
+    },
+
+    setLoading (state, val) {
+      state.showLoader = val
     }
   },
 

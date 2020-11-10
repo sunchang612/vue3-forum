@@ -87,3 +87,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```
 - 直接写 placeholder 会继承在子组件的根元素的属性中，也就是上面的 div 中 ```使用 inheritAttrs : false``` 禁用 Attribute 的继承
 - 然后直接使用 $attrs 获取添加的属性
+
+## Teleport
+
+
+## 优化的点
+### 重复请求
+- 每次打开一个页面都会重复发起请求
